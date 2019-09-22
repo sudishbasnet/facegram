@@ -1,0 +1,21 @@
+<div class="modal fade" id="addstory" role="dialog" style="height:400px">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Upload Story</h4>
+            </div>
+            <div class="modal-body">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input class="form-control" type="file" name="story">
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" name>Upload</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

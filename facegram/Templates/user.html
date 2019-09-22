@@ -1,0 +1,49 @@
+{% extends 'index.html' %}
+
+{% block title %}
+User
+{% endblock %}
+
+{% block login %}
+
+<div class="jumbotron row" style="padding-bottom:50px">
+    <img class="profile" src="{{ user.photo.url }}" style="float:left">
+    <h2 class="shadow"><a>{{ user.username }}</a></h2>
+    {% if request.user != user %}
+        <form action='/facegram/follow' method="POST">
+            {% csrf_token %}
+            <input name='followuser' type='hidden' value="{{ user }}">
+            <input type="hidden" name="url" value="/facegram/user/{{ user.id }}">
+            <button  type="submit" class="btn btn-primary">
+                
+                {% if user in request.user.following.all %}
+                following
+                {% else %}
+                follow
+                {% endif %}
+            </button>
+        </form>
+        
+    <a href="/facegram/chat/{{ request.user.id }}/{{ user.id }}" id="{{ users.id }}">Message</a> ||
+    {% endif %}
+    <a href="#" >Following {{ user.following.count }}</a> ||
+    <a href="#" >Followers {{ user.follower.count }}</a>
+    <hr>
+    <h6>{{ user.email }}</h6>
+    <div>{{ user.bio }}</div>
+
+</div>
+<hr>
+{% if user.account_type == "public" or  user in request.user.following.all or request.user == user %}
+    {% if post %}
+        {% include 'posts.html' %}
+    {% else %}
+        <h1 class="shadow" style="color:white">No Posts</h1>
+    {% endif %}
+
+{% else %}
+    <h2 class="shadow" style="color:white">Private Account<i class="fa fa-lock"></i></h2>
+
+{% endif %}
+
+{% endblock %}

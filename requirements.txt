@@ -1,0 +1,9 @@
+Django==2.2.4
+django-crispy-forms==1.7.2
+djangorestframework==3.10.3
+pytz==2019.2
+gunicorn==19.9.0
+django-heroku
+pillow
+dj_database_url
+

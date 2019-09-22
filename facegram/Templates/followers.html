@@ -1,0 +1,30 @@
+{% extends 'index.html' %}
+
+{% block title %}
+Followers list
+{% endblock %}
+
+{% block login %}
+   <h2 class="shadow" style="color: white">{{ name }}</h2> 
+        {% for foll in users %}
+            <div class="jumbotron col-md-4 col-sm-4">
+                <img class="profile" src="{{ foll.photo.url }}"><br><br>
+                <h4><a href="/facegram/user/{{ foll.id }}">{{ foll }} </a></h4>
+                <form action='/facegram/follow' method="POST">
+                    {% csrf_token %}
+                    <input name='followuser' type='hidden' value="{{ foll }}">
+                    <input type="hidden" name="url" value="/facegram/friends/following">
+                    <button type="submit" class="btn btn-primary">
+                    {% if foll in request.user.following.all %}
+                        following
+                    {% else %}
+                        follow
+                    {% endif %}
+                    </button>
+                </form>
+            </div>
+    
+        
+        {% endfor %}
+    
+{% endblock %}

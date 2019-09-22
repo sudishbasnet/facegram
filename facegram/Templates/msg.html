@@ -1,0 +1,26 @@
+{% extends 'online.html' %}
+{% block form %}
+{% endblock %}
+{% block msgcontent %}
+
+        {% for message in messages %}
+            {% if message.sender == request.user %}
+                <div class="msg right" style="background-color:gray;">
+                    <div style="position: absolute;"><h5>You</h5></div><br>
+                    {{ message }}
+                </div>
+                    {% else %}
+                <div class="msg bg-primary left">
+                    <div style="position:absolute;"><h5>{{ message.sender }}</h5></div><br>
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    <script>
+    $(function () {
+        $('#user{{ receiver.id }}').addClass('active');
+        //calling function in every second
+        setInterval(receive,1000)
+    })
+    </script>
+{% endblock %}

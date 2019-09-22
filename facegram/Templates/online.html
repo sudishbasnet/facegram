@@ -1,0 +1,76 @@
+{% extends 'index.html' %}
+{% block login %}
+ 
+        <div>
+            <div class="scrollx" id="users"></div>
+        </div>
+        <br>
+
+        <div class="jumbotron">
+            <h3><a href="/facegram/user/{{ receiver.id }}">{{ receiver.username }}</a></h3>
+            <hr>
+            <div id="board" style="height:400px;overflow-y:scroll">
+                {% block msgcontent %}
+                <ul class="list-group">
+                    {% for users in unread %}
+                        <li class="list-group-item row" style="width:100%;">
+                            <a class="col-sm-2" href="/user/{{ users.sender.id }}">
+                            <img src="{{ users.sender.photo.url }}" style="width:80px;height:80px;border-radius:100%;">                      
+                            <p class="col-sm-1">{{ users.sender }}</p>
+                        </a>
+                        <a href="/chat/{{ users.receiver.id }}/{{ users.sender.id }}" id="{{ users.receiver.id }}">
+                            <button class="btn btn-default col-sm-10" style="height:100px">{{ users }}</button>
+                        </a>
+                        
+                    </li>
+
+                    {% endfor %}
+                </ul>
+
+
+                {% endblock %}
+            </div>
+            <hr>
+            <form id="chat-box" class="form-inline {% block form %}hide{% endblock %}" method="post">
+                {% csrf_token %}
+                <div class="col-sm-10">
+                    <input id="id_message" class="form-control" name="message" type="text" placeholder="Type your message..">
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-primary">Send</button>
+                </div>
+                <br>
+            </form>
+            </div>
+ 
+
+
+{% load staticfiles %}
+    <script>
+        // For receiving
+        sender_id = "{{ receiver.id }}";
+        receiver_id = "{{ request.user.id }}";
+
+        //For sending
+        $(function () {
+            scrolltoend();
+            $('#chat-box').on('submit', function (event) {
+                event.preventDefault();
+                var message = $('#id_message');
+                send('{{ request.user.username }}', '{{ receiver.username }}', message.val());
+                message.val('');
+            })
+            setInterval(() => {
+                getUsers({{ request.user.id }}, doc => {
+                    let list = ''
+                    doc.map(userItem => {
+                        list += userItem
+                    })
+                    $('#users').html(list)
+                });
+            }, 1000)
+        })        
+
+        
+    </script>
+{% endblock %}

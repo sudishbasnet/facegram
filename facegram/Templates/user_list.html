@@ -1,0 +1,12 @@
+{% if facegrammer %}
+    {% for user in facegrammer %}
+        <div class="col-md-4 col-sm-4">
+            <img class="profile" style="box-shadow:none" src="{{ user.photo.url }}"><br><br>
+            <h4><a href="/facegram/user/{{ user.id }}">{{ user }}</a></h4>
+
+        </div>
+    {% endfor %}
+{% else %}
+<p>No User found.</p>
+{% endif %}
+

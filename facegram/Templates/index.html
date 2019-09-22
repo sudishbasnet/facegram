@@ -1,0 +1,123 @@
+{% load static %}
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <title>
+        {% block title %}
+            Face Gram
+        {% endblock %}
+    </title>
+    <meta name="viewport" content="width=device-width"> 
+
+    <!-- message js -->
+    <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}" />
+    <script type="text/javascript" src="{% static 'js/chat.js' %}"></script>
+    
+    <!-- comment collapse -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <!-- fonts, style -->
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static "css/templatemo_style.css" %}">
+    <link rel="stylesheet" href="{% static "ss/css/templatemo_misc.css" %}">
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+    
+   
+
+</head>
+<body>
+
+    <div class="bg-overlay"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 col-sm-12">
+                <div class="sidebar-menu">
+                    <div class="logo-wrapper">  
+                            {% if request.user.is_authenticated %}
+                            <div class="g-item profile">
+                                <img class="profile" src="{{ request.user.photo.url }}">
+                                {% if request.user.my_story.count %}
+                                {% for content in request.user.my_story.all %}
+                                <a data-rel="lightbox" class="overlay" href="{{ content.story.url }}">
+                                    <span>+</span>
+                                </a>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+    
+                                <h4> Hi {{ request.user }}</h4></a>
+                                <p>{{ request.user.bio }}</p><br><br>
+                                <a class="shadow col-sm-1 fa fa-edit" href="" data-toggle="modal" data-target="#addFile"></a>
+                                <a href="/facegram/friends/following" class="shadow col-sm-5">Following {{ request.user.following.count }}</a>
+                                <a href="/facegram/friends/followers" class="shadow col-sm-5"> Followers {{ request.user.follower.count }}</a>
+                                
+                            {% else %}
+                                <img src="{% static "images/logo.png"%}">
+                                <br><br><h4 class="shadow">Face Gram</h4>
+                            {% endif %}
+                    </div> 
+                    
+                    <div class="menu-wrapper">
+                        <ul class="menu">
+                            {% if request.user.is_authenticated %}
+                                <li class="shadow"><a href="/facegram/">Home</a></li>
+                                <li class="shadow"><a href="/facegram/gallery">Gallery</a></li>
+                                <li class="shadow"><a href="/facegram/chat">Messages</a></li>
+                                <li class="shadow"><a href="/facegram/upost">Upload Post</a></li>
+                                <li class="shadow"><a href="/facegram/facegrammer">facegrammer</a></li>
+                                <li class="shadow"><a class="fa fa-cog" href="" data-toggle="modal" data-target="#settings"> Settings</a></li>
+                                <li class="shadow"><a class="fa fa-sign-out" href="{% url 'logout' %}"> Logout</a></li>
+                            {% else %}
+                                <li class="shadow"><a class="fa fa-user" href="/facegram/signup/add"> Sign Up</a></li>
+                                <li class="shadow"><a class="fa fa-sign-in" href="{% url 'login' %}"> Login</a></li>
+                            {% endif %}
+                        </ul> 
+                        <a href="#" class="toggle-menu"><i class="fa fa-bars"></i></a>
+                    </div> 
+
+                </div> 
+                
+            </div> 
+
+
+            <div class="col-md-8 col-sm-12">
+                <div class="text-center">
+                    {% block login %}
+
+                    {% endblock %}
+                 
+                </div>
+
+            </div>
+
+        </div> 
+
+    </div> 
+ 
+
+    <!--footer-->
+    {% include 'footer.html' %}
+
+    <!-- modals-->
+    {% include 'modals/addprofile.html' %}
+    {% include 'modals/setting.html' %}
+    {% include 'modals/story.html' %}
+
+    <!-- scripts links -->
+    <!-- photo view -->
+    <script src="{% static "js/vendor/jquery-1.10.1.min.js" %}"></script>
+    <script src="{% static "ss/js/plugins.js" %}"></script>
+    <script src="{% static "ss/js/main.js" %}"></script>
+    <!-- menubar -->
+    <script src="{% static "js/main.js"%}"></script>
+    <!-- posts script -->
+    <script src="{% static "js/index.js" %}"></script>
+    <!-- search scripts -->
+    <script src="{% static "js/search.js" %}"></script>
+    
+
+
+</body>
+</html>

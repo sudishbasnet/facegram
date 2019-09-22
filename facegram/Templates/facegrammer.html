@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+{% block title %}
+Facegrammer
+{% endblock %}
+{% block login %}
+<div class="jumbotron" >
+    <h2 class="shadow">Facegrammers</h2>
+    <form method='post' >
+        {% csrf_token %}
+        <input type="text" id="searchdata" class="form-control" placeholder="Search facegrammers" onkeyup="myfunction()">
+    </form>
+</div>
+
+<div id="querydata">
+    {% include 'user_list.html' %}
+</div>
+
+
+
+{% endblock %}
+

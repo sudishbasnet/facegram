@@ -1,0 +1,20 @@
+{% extends 'index.html' %}
+
+{% block title %}
+Save User
+{% endblock %}
+
+{% block login %}
+
+{% load crispy_forms_tags %}
+<div class="jumbotron">
+<h2 class="shadow">Save User</h2>
+<form method="post" enctype="multipart/form-data">
+    {{ form.non_field_errors }}
+    {% csrf_token %}
+    {{ form | crispy }}
+    <button class="btn btn-primary" type="submit">Save</button>
+</form>
+</div>
+
+{% endblock %}
